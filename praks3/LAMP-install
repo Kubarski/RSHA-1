@@ -74,13 +74,19 @@ echo "Sisesta soovitud WordPress kasutaja nimi: "
 read dbuser
 echo "Sisesta soovitud andmebaasi parool: "
 read dbpass
+echo "Sisesta MySQL admin kasutaja nimi: "
+read dbroot
+echo "Sisesta MySQL admin kasutaja parool: "
+read dbrootpass
 
 	if [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' mysql-server | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed""  == 1 ]; then
 		echo "LAMP stack on juba paigaldatud, jätkan WordPressi paigaldamisega!"
 	else
 		echo "LAMP stack puudub! LAMP paigaldamine..."
 		apt --assume-yes install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql
+		mysql_secure_installation
 	fi
+
 echo "WordPressi paigaldmine..."
 cd /var/www/html/
 curl -O http://wordpress.org/latest.tar.gz
@@ -94,17 +100,33 @@ mkdir -p wp-content/uploads
 chmod 755 wp-content/uploads
 rm latest.tar.gz
 cd ~
+mysql -u$dbroot -p$dbrootpass -e "create database $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@localhost IDENTIFIED BY '$dbpass'"
 echo "WordPress paigaldatud"
 
 elif [ $asi = 6 ]; then
+
 apt update
 apt upgrade
+
+echo "Sisesta soovitud WordPress andmebaasi nimi: "
+read dbname
+echo "Sisesta soovitud WordPress kasutaja nimi: "
+read dbuser
+echo "Sisesta soovitud andmebaasi parool: "
+read dbpass
+echo "Sisesta MySQL admin kasutaja nimi: "
+read dbroot
+echo "Sisesta MySQL admin kasutaja parool: "
+read dbrootpass
+
 if [ "dpkg-query -W -f='${Status}' phpmyadmin | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' mysql-server | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed""  == 1 ]; then
                 echo "Kõik paketid on juba paigaldatud!"
         else
 	echo "vajalike pakettide paigaldmine..."
-apt --assume-yes install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql phpmyadmin
+	apt --assume-yes install apache2 mysql-server php libapache2-mod-php php-mcrypt php-mysql phpmyadmin
+	mysql_secure_installation
 	fi
+
 cd /var/www/html/
 curl -O http://wordpress.org/latest.tar.gz
 tar -zxvf latest.tar.gz
@@ -116,6 +138,7 @@ sed “s/password_here/$dbpass/g” wp-config.php
 mkdir -p wp-content/uploads
 chmod 755 wp-content/uploads
 rm latest.tar.gz
+mysql -u$dbroot -p$dbrootpass -e "create database $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@localhost IDENTIFIED BY '$dbpass'"
 
 echo "LAMP stack, PMA ja WP paigaldatud!"
 elif [ $asi = 7 ]; then
