@@ -18,6 +18,8 @@ read asi
 tput sgr0
 
 if [ $asi = 1 ]; then
+apt update
+apt upgrade
 	if [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed"" == 1 ]; then
 	echo "Apache2 on juba paigaldatud!"
 	exit
@@ -27,6 +29,8 @@ if [ $asi = 1 ]; then
 	echo "Apache2 paigaldatud!"
 	fi
 elif [ $asi = 2 ]; then
+apt update
+apt upgrade
 	if [ "dpkg-query -W -f='${Status}' mysql | grep -c "ok installed"" == 1 ]; then
         	echo "MySQL on juba paigaldatud!"
         	exit
@@ -37,6 +41,8 @@ elif [ $asi = 2 ]; then
 	echo "MySQL paigaldatud"
 	fi
 elif [ $asi = 3 ]; then
+apt update
+apt upgrade
 	if [ "dpkg-query -W -f='${Status}' php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed"" == 1 ] ; then
                 echo "PHP ja kõik vajalikud moodulid on juba paigaldatud!"
                 exit
@@ -47,6 +53,8 @@ elif [ $asi = 3 ]; then
         fi
 
 elif [ $asi = 4 ]; then
+apt update
+apt upgrade
 	if [ "dpkg-query -W -f='${Status}' phpmyadmin | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' mysql-server | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed""  == 1 ]; then
                 echo "PhpMyAdmin on juba paigaldatud!"
                 exit
@@ -58,6 +66,8 @@ elif [ $asi = 4 ]; then
         fi
 
 elif [ $asi = 5 ]; then
+apt update
+apt upgrade
 echo "Sisesta soovitud WordPress andmebaasi nimi: "
 read dbname
 echo "Sisesta soovitud WordPress kasutaja nimi: "
@@ -85,7 +95,10 @@ chmod 755 wp-content/uploads
 rm latest.tar.gz
 cd ~
 echo "WordPress paigaldatud"
+
 elif [ $asi = 6 ]; then
+apt update
+apt upgrade
 if [ "dpkg-query -W -f='${Status}' phpmyadmin | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' mysql-server | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed""  == 1 ]; then
                 echo "Kõik paketid on juba paigaldatud!"
         else
