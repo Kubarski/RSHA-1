@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+clear
+tput setaf 5
+echo "Tere tulemast menüüsse."
+echo "Tegevuste valik:"
+tput setaf 6
+echo "1 - Paigalda Apache2"
+echo "2 - Paigalda MySQL"
+echo "3 - Paigalda PHP"
+echo "4 - Paigalda PhpMyAdmin"
+echo "5 - Paigalda Wordpress"
+echo "6 - Paigalda kõik"
+echo "7 - Välju menüüst"
+tput setaf 5
+echo -n "Palun vali oma tegevus: "
+read asi
+tput sgr0
+
+if [ $asi = 1 ]; then
+
+elif [ $asi = 2 ]; then
+
+elif [ $asi = 3 ]; then
+
+elif [ $asi = 4 ]; then
+
+elif [ $asi = 5 ]; then
+
+elif [ $asi = 6 ]; then
+
+elif [ $asi = 7 ]; then
+	exit
+else
+	./LAMP-install
+fi
