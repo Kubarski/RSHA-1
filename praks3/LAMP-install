@@ -18,8 +18,8 @@ read asi
 tput sgr0
 
 if [ $asi = 1 ]; then
-apt update
-apt upgrade
+apt --assume-yes update
+apt --assume-yes upgrade
 	if [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed"" == 1 ]; then
 	echo "Apache2 on juba paigaldatud!"
 	exit
@@ -29,8 +29,8 @@ apt upgrade
 	echo "Apache2 paigaldatud!"
 	fi
 elif [ $asi = 2 ]; then
-apt update
-apt upgrade
+apt --assume-yes update
+apt --assume-yes upgrade
 	if [ "dpkg-query -W -f='${Status}' mysql | grep -c "ok installed"" == 1 ]; then
         	echo "MySQL on juba paigaldatud!"
         	exit
@@ -41,8 +41,8 @@ apt upgrade
 	echo "MySQL paigaldatud"
 	fi
 elif [ $asi = 3 ]; then
-apt update
-apt upgrade
+apt --assume-yes update
+apt --assume-yes upgrade
 	if [ "dpkg-query -W -f='${Status}' php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed"" == 1 ] ; then
                 echo "PHP ja kõik vajalikud moodulid on juba paigaldatud!"
                 exit
@@ -53,8 +53,8 @@ apt upgrade
         fi
 
 elif [ $asi = 4 ]; then
-apt update
-apt upgrade
+apt --assume-yes update
+apt --assume-yes upgrade
 	if [ "dpkg-query -W -f='${Status}' phpmyadmin | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' mysql-server | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed""  == 1 ]; then
                 echo "PhpMyAdmin on juba paigaldatud!"
                 exit
@@ -66,8 +66,8 @@ apt upgrade
         fi
 
 elif [ $asi = 5 ]; then
-apt update
-apt upgrade
+apt --assume-yes update
+apt --assume-yes upgrade
 echo "Sisesta soovitud WordPress andmebaasi nimi: "
 read dbname
 echo "Sisesta soovitud WordPress kasutaja nimi: "
@@ -89,7 +89,7 @@ read dbrootpass
 
 echo "WordPressi paigaldmine..."
 cd /var/www/html/
-curl -O http://wordpress.org/latest.tar.gz
+curl -O https://wordpress.org/latest.tar.gz
 tar -zxvf latest.tar.gz
 cd wordpress
 cp wp-config-sample.php wp-config.php
@@ -105,8 +105,8 @@ echo "WordPress paigaldatud"
 
 elif [ $asi = 6 ]; then
 
-apt update
-apt upgrade
+apt --assume-yes update
+apt --assume-yes upgrade
 
 echo "Sisesta soovitud WordPress andmebaasi nimi: "
 read dbname
@@ -128,7 +128,7 @@ if [ "dpkg-query -W -f='${Status}' phpmyadmin | grep -c "ok installed"" == 1 ] &
 	fi
 
 cd /var/www/html/
-curl -O http://wordpress.org/latest.tar.gz
+curl -O https://wordpress.org/latest.tar.gz
 tar -zxvf latest.tar.gz
 cd wordpress
 cp wp-config-sample.php wp-config.php
