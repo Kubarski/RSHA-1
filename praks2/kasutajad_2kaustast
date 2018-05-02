@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# kasutajate lisamise skript
+
+if [ $# -ne 2 ]; then
+    echo "Kasutusjuhend: $0 kasutajafailinimi paroolifailinimi"
+else
+	failinimi=$1
+	parool=$2
+  if [ -f $failinimi -a -r $failinimi ] && [ -f $parool -a -r $parool ]; then
+    echo "failid on korras"
+    for rida in $(cat $failinimi)
+    do
+	sh lisa_kasutaja $rida
+:|paste -d':' $failinimi - $parool
+	chpasswd < $kasutajaparoolid
+done
+
+  else
+    echo "probleem failidega"
+  fi
+fi
+
