@@ -7,17 +7,18 @@ if [ $# -ne 2 ]; then
 else
 	failinimi=$1
 	parool=$2
-  if [ -f $failinimi -a -r $failinimi ] && [ -f $parool -a -r $parool ]; then
-    echo "failid on korras"
-    for rida in $(cat $failinimi)
-    do
-	sh lisa_kasutaja $rida
-:|paste -d':' $failinimi - $parool
-	chpasswd < $kasutajaparoolid
-done
+	if [ -f $failinimi -a -r $failinimi ] && [ -f $parool -a -r $parool ]; then
+	echo "failid on korras"
+		for rida in $(cat $failinimi)
+		do
+			sh lisa_kasutaja $rida
+			paste -d":" $failinimi	$parool > kasutajaparoolid.tmp
+			chpasswd < kasutajaparoolid.tmp
+			rm kasutajaparoolid.tmp
+		done
 
-  else
-    echo "probleem failidega"
-  fi
+	else
+	echo "probleem failidega"
+	fi
 fi
 
