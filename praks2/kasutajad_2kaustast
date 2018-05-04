@@ -11,7 +11,19 @@ else
 	echo "failid on korras"
 		for rida in $(cat $failinimi)
 		do
-			sh lisa_kasutaja $rida
+			#sh lisa_kasutaja
+			kasutaja=$rida
+			useradd $kasutaja -m -s /bin/bash
+			if [ $? -eq 0 ]; then
+        			echo "Loodud kasutaja $kasutaja"
+        			cat /etc/passwd | grep $kasutaja
+        			ls -la /home/$kasutaja
+			else
+        			echo "Esines probleem $kasutaja lisamisega."
+        			echo "Veakood: $?"
+			fi
+			#sh lisa_kasutaja lõpp
+
 			paste -d":" $failinimi	$parool > kasutajaparoolid.tmp
 			chpasswd < kasutajaparoolid.tmp
 			rm kasutajaparoolid.tmp
