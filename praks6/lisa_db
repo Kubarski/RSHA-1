@@ -24,11 +24,12 @@ paste .parool.tmp >> /home/$kasutaja/.my.cnf
 
 echo "Sisesta andmebaasi nimi"
 read dbnimi
-dbname=$kasutaja_$dbnimi
+dbname="$kasutaja""_""$dbnimi"
 
 for dbpass in $(cat .parool2.tmp)
 do
 mysql -uroot -p$dbrootpass -e "create database $dbname ; GRANT ALL PRIVILEGES ON $dbname.* TO $kasutaja@localhost IDENTIFIED BY '$dbpass'"
+echo "Andmebaas loodud."
 done
 
 rm .parool.tmp
