@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#Kasutajate lisamine
+#Kasutajale public veebilehe lisamine
 #
 #
 
@@ -12,7 +12,7 @@ kasutaja=$1
 ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 
 mkdir /home/$kasutaja/public
-chmod 751 /home/$kasutaja/public
+chmod -R 751 /home/$kasutaja/public
 echo "<html><body>Tere, $kasutaja</body></html>" > /home/$kasutaja/public/index.html
 sed -i 's/public_html/public/g' /etc/apache2/mods-available/userdir.conf
 a2enmod userdir
@@ -21,9 +21,8 @@ service apache2 restart
 if [ $? -eq 0 ]; then
 	echo "Loodud avalik veebileht kasutajale $kasutaja"
 	echo "Leiad selle järgmiselt aadressilt: http://$ip/~$kasutaja/index.html"
-	ls -la /home/$kasutaja
 else
-	echo "Esines probleem $kasutaja lisamisega."
+	echo "Esines probleem veebilehe loomisel kasutajale $kasutaja"
 	echo "Veakood: $?"
 fi
 fi
