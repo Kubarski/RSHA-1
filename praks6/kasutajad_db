@@ -16,10 +16,7 @@ elif [ ! -e /home/$kasutaja/.my.cnf ]; then
 	read dbrootpass
 
 	#################################################
-	echo "[mysql]" > /home/$kasutaja/.my.cnf
-	echo "user=$kasutaja" >> /home/$kasutaja/.my.cnf
-	paste .parool.tmp >> /home/$kasutaja/.my.cnf
-	echo "[mysqladmin]" >> /home/$kasutaja/.my.cnf
+	echo "[client]" > /home/$kasutaja/.my.cnf
 	echo "user=$kasutaja" >> /home/$kasutaja/.my.cnf
 	paste .parool.tmp >> /home/$kasutaja/.my.cnf
 	#################################################
@@ -32,7 +29,7 @@ elif [ ! -e /home/$kasutaja/.my.cnf ]; then
 	mysql -uroot -p$dbrootpass -e "create database $dbname ; GRANT ALL PRIVILEGES ON $dbname.* TO $kasutaja@localhost IDENTIFIED BY '$dbpass'"
 	done
 	echo "Andmebaas loodud."
-
+chown "$kasutaja"":""$kasutaja" /home/$kasutaja/.my.cnf
 rm .parool.tmp
 rm .parool2.tmp
 else
@@ -46,6 +43,7 @@ else
 	done
 	echo "Andmebaas loodud."
 
+chown "$kasutaja"":""$kasutaja" /home/$kasutaja/.my.cnf
 rm .parool.tmp
 rm .parool2.tmp
 fi
