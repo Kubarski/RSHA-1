@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+#Andmbebaasi loomise skript
+kasutaja=$1
+kp=$(date +"%Y-%m-%d.%H-%M")
+
+if [ $# -ne 1 ]; then
+	echo "Kasutusjuhend: $0 Kasutajanimi"
+elif [ ! -e /home/$kasutaja/.my.cnf ]; then
+
+sh kasutajad_db
+
+else
+echo "sisesta soovitud andmebaasi nimi"
+read dbname
+
+mysqldump $dbname > /home/$kasutaja/$kp.$dbname.backup.sql
+
+fi
