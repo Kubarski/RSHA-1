@@ -14,6 +14,6 @@ else
 echo "sisesta soovitud andmebaasi nimi"
 read dbname
 
-mysqldump $dbname > /home/$kasutaja/$kp.$dbname.backup.sql
+mysqldump -u$kasutaja $dbname > /home/$kasutaja/$kp.$dbname.backup.sql
 
 fi
