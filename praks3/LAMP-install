@@ -17,10 +17,20 @@ echo -n "Palun vali oma tegevus: "
 read asi
 tput sgr0
 
+apache2=$(dpkg-query -W -f='${Status}' apache2 2>/dev/null | grep -c "ok installed")
+libapache=$(dpkg-query -W -f='${Status}' libapache2-mod-php 2>/dev/null | grep -c "ok installed")
+mysql=$(dpkg-query -W -f='${Status}' mysql-server 2>/dev/null | grep -c "ok installed")
+php=$(dpkg-query -W -f='${Status}' php 2>/dev/null | grep -c "ok installed")
+mcrypt=$(dpkg-query -W -f='${Status}' php-mcrypt 2>/dev/null | grep -c "ok installed")
+phpmysql=$(dpkg-query -W -f='${Status}' php-mysql 2>/dev/null | grep -c "ok installed")
+pma=$(dpkg-query -W -f='${Status}' phpmyadmin 2>/dev/null | grep -c "ok installed")
+
+
+
 if [ $asi = 1 ]; then
 apt --assume-yes update
 apt --assume-yes upgrade
-	if [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed"" == 1 ]; then
+	if [ $apache2 -eq 1 ]; then
 	echo "Apache2 on juba paigaldatud!"
 	exit
 	else
@@ -31,7 +41,7 @@ apt --assume-yes upgrade
 elif [ $asi = 2 ]; then
 apt --assume-yes update
 apt --assume-yes upgrade
-	if [ "dpkg-query -W -f='${Status}' mysql | grep -c "ok installed"" == 1 ]; then
+	if [ $mysql -eq 1 ]; then
         	echo "MySQL on juba paigaldatud!"
         	exit
         else
@@ -43,7 +53,7 @@ apt --assume-yes upgrade
 elif [ $asi = 3 ]; then
 apt --assume-yes update
 apt --assume-yes upgrade
-	if [ "dpkg-query -W -f='${Status}' php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed"" == 1 ] ; then
+	if [ $php -eq 1 ] && [ $libapache  -eq 1 ] && [ $mcrypt -eq 1 ] && [ $phpmysql -eq 1 ]; then
                 echo "PHP ja kõik vajalikud moodulid on juba paigaldatud!"
                 exit
         else
@@ -55,7 +65,7 @@ apt --assume-yes upgrade
 elif [ $asi = 4 ]; then
 apt --assume-yes update
 apt --assume-yes upgrade
-	if [ "dpkg-query -W -f='${Status}' phpmyadmin | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' mysql-server | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed""  == 1 ]; then
+	if [ $pma -eq 1 ] && [ $mysql -eq 1 ] && [ $apache2 -eq 1 ] && [ $php -eq 1 ] && [ $libapache  -eq 1 ] && [ $mcrypt -eq 1 ] && [ $phpmysql -eq 1 ]; then
                 echo "PhpMyAdmin on juba paigaldatud!"
                 exit
         else
@@ -79,7 +89,7 @@ read dbroot
 echo "Sisesta MySQL admin kasutaja parool: "
 read dbrootpass
 
-	if [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' mysql-server | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed""  == 1 ]; then
+	if [ $apache2 -eq 1 ] && [ $mysql -eq 1 ] && [ $php -eq 1 ] && [ $libapache  -eq 1 ] && [ $mcrypt -eq 1 ] && [ $phpmysql -eq 1 ]; then
 		echo "LAMP stack on juba paigaldatud, jätkan WordPressi paigaldamisega!"
 	else
 		echo "LAMP stack puudub! LAMP paigaldamine..."
@@ -119,7 +129,7 @@ read dbroot
 echo "Sisesta MySQL admin kasutaja parool: "
 read dbrootpass
 
-if [ "dpkg-query -W -f='${Status}' phpmyadmin | grep -c "ok installed"" == 1 ] && [ "dpkg-query -W -f='${Status}' apache2 | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' mysql-server | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' libapache2-mod-php | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mcrypt | grep -c "ok installed""  == 1 ] && [ "dpkg-query -W -f='${Status}' php-mysql | grep -c "ok installed""  == 1 ]; then
+if [ $pma -eq 1 ] && [ $apache2 -eq 1 ] && [ $mysql -eq 1 ] && [ $php -eq 1 ] && [ $libapache  -eq 1 ] && [ $mcrypt -eq 1 ] && [ $phpmysql -eq 1 ]; then
                 echo "Kõik paketid on juba paigaldatud!"
         else
 	echo "vajalike pakettide paigaldmine..."
