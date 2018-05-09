@@ -2,7 +2,7 @@
 #
 #Andmbebaasi loomise skript
 kasutaja=$1
-dbname=$2
+dbname="$1_$2"
 kp=$(date +"%Y-%m-%d.%H-%M")
 
 if [ $# -ne 2 ]; then
@@ -15,7 +15,8 @@ else
 
 mysqldump -u$kasutaja $dbname > /home/$kasutaja/$kp.$dbname.backup.sql
 mkdir /mysql_backup
-tar -czvf /home/$kasutaja/$kp.$dbname.backup.sql.tar.gz
+chown "$kasutaja"":""$kasutaja" /mysql_backup
+tar -czvf /home/$kasutaja/$kp.$dbname.backup.sql.tar.gz /home/$kasutaja/$kp.$dbname.backup.sql
 mv /home/$kasutaja/$kp.$dbname.backup.sql.tar.gz /mysql_backup/
 rm /home/$kasutaja/$kp.$dbname.backup.sql
 
