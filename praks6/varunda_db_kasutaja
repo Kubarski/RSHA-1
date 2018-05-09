@@ -14,5 +14,9 @@ sh kasutajad_db
 else
 
 mysqldump -u$kasutaja $dbname > /home/$kasutaja/$kp.$dbname.backup.sql
+mkdir /mysql_backup
+tar -czvf /home/$kasutaja/$kp.$dbname.backup.sql.tar.gz
+mv /home/$kasutaja/$kp.$dbname.backup.sql.tar.gz /mysql_backup/
+rm /home/$kasutaja/$kp.$dbname.backup.sql
 
 fi
