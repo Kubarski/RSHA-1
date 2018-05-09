@@ -1,0 +1,14 @@
+#!/bin/bash
+#automatiseeritud skripti käivitamine
+
+echo "SHELL = /bin/bash" > cron.tmp
+echo "" >> cron.tmp
+echo "MAILTO= root" >> cron.tmp
+echo "" >> cron.tmp
+echo "0 2,4,6,8,10,12,14,16,18,20,22 * * * root "/home/user/rsha/praks6/kasutajad_db user"" >> cron.tmp
+echo "" >> cron.tmp
+echo "0 0 * * * root "/home/user/rsha/praks6/varunda_db_kasutaja user testdb"" >> cron.tmp
+
+sudo crontab /home/user/resha/praks7/cron.tmp
+sudo cat /var/spool/cron/crontab/root
+rm ./cron.tmp
