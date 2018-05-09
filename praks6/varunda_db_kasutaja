@@ -2,17 +2,16 @@
 #
 #Andmbebaasi loomise skript
 kasutaja=$1
+dbname=$2
 kp=$(date +"%Y-%m-%d.%H-%M")
 
-if [ $# -ne 1 ]; then
-	echo "Kasutusjuhend: $0 Kasutajanimi"
+if [ $# -ne 2 ]; then
+	echo "Kasutusjuhend: $0 Kasutajanimi Andmebaasinimi"
 elif [ ! -e /home/$kasutaja/.my.cnf ]; then
 
 sh kasutajad_db
 
 else
-echo "sisesta soovitud andmebaasi nimi"
-read dbname
 
 mysqldump -u$kasutaja $dbname > /home/$kasutaja/$kp.$dbname.backup.sql
 
